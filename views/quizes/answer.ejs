@@ -1,4 +1,8 @@
 <p>
     <%= respuesta %>
-    <a href="/quizes/<%= quiz.id %>">Volver</a>
+    <% if (respuesta === 'Correcto'){ %>
+        <a href="/quizes">Volver</a>
+    <% } else { %>
+        <a href="/quizes/<%= quiz.id %>">Volver</a>
+    <% } %>
 </p>
