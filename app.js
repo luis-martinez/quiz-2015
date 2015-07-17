@@ -28,6 +28,21 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// auto-logout de sesión
+app.use(function(req, res, next){
+    var tiempo = 2*60*1000; // 2 minutos
+    var ahora = new Date().getTime();
+
+    if(req.session && req.session.lastAccess) {
+    var duracion = ahora - req.session.lastAccess;
+        if (tiempo <= duracion){
+            delete req.session.user;
+        }
+    }
+    req.session.lastAccess = ahora;
+    next();
+});
+
 // Helpers dinamicos:
 app.use(function(req, res, next) {
 
